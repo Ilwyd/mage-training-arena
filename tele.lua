@@ -12,8 +12,6 @@ local function isInPuzzleArea(puzzle)
 
     local source_coord_grid = World.GetRegionSourceForCoordGrid(Player.GetEntity().coordGrid)
 
-    log(tostring(source_coord_grid))
-
     if source_coord_grid == nil then
         return false
     end
