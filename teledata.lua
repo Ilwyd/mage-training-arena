@@ -1,12 +1,12 @@
 local TILE_WIDTH = 512
 local START = Vector3.new(0, 0, 0)
-local NORTH = Vector3.new(0, 0, 512)
-local EAST = Vector3.new(512, 0, 0)
-local SOUTH = Vector3.new(0, 0, -512)
-local WEST = Vector3.new(-512, 0, 0)
+local NORTH = Vector3.new(0, 0, TILE_WIDTH)
+local EAST = Vector3.new(TILE_WIDTH, 0, 0)
+local SOUTH = Vector3.new(0, 0, -TILE_WIDTH)
+local WEST = Vector3.new(-TILE_WIDTH, 0, 0)
 local LINE_COLOUR = 0x00FFFFFF
 
-local line_data = {
+local tele_data = {
     -- Level 0
     -- NW
     {
@@ -249,7 +249,7 @@ end
 local function genData()
     local out_data = {}
     
-    for _, puzzle in ipairs(line_data) do
+    for _, puzzle in ipairs(tele_data) do
         local puzzle_data = {
             coord_grid = puzzle.coord_grid,
             bottom_left_tile = puzzle.bottom_left_tile,

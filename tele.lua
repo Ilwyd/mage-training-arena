@@ -1,4 +1,4 @@
-local line_data = require("linedata")
+local tele_data = require("teledata")
 
 local BASE_FLOOR_FINE_UNITS = 1600
 
@@ -35,7 +35,7 @@ Event.Draw.Subscribe("teleLines", function(drawEvent)
     
     local exit = true
     local curr_puzzle = nil
-    for _, puzzle in ipairs(line_data) do
+    for _, puzzle in ipairs(tele_data) do
         if isInPuzzleArea(puzzle) then
             exit = false
             curr_puzzle = puzzle
