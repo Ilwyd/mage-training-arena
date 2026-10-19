@@ -1,1 +1,2 @@
 require("tele")
+require("alch")
