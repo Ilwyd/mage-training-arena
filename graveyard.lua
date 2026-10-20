@@ -17,6 +17,11 @@ local function getTotalPoints(inv)
     return total_1 + total_2 * 2 + total_3 * 3 + total_4 * 4
 end
 
+
+local rectColour = Vector4.new(1, 0, 0, 1)
+local red = Vector4.new(1, 0, 0, 1)
+local green = Vector4.new(0, 1, 0, 1)
+local colourChanged = false
 Event.Draw.Subscribe("boneCheck", function(inventoryUpdatedEvent)
     local inv_inter = ui.Interfaces:GetInterface(id.Interface.TOPLEVEL_V2_INVENTORY)
 
@@ -32,12 +37,13 @@ Event.Draw.Subscribe("boneCheck", function(inventoryUpdatedEvent)
 
     local held_points = getTotalPoints(inv)
 
-    local rectColour = Vector4.new(0, 0, 0, 1)
 
-    if held_points > 15 then
-        rectColour.y = 1
-    else
-        rectColour.x = 1
+    if held_points > 15 and rectColour ~= green then
+        rectColour = green
+        colourChanged = true
+    elseif held_points < 16 and rectColour ~= red then
+        rectColour = red
+        colourChanged = true
     end
 
     inv_component:IterateDynamicComponents(function (component, visible)
@@ -60,6 +66,7 @@ Event.Draw.Subscribe("boneCheck", function(inventoryUpdatedEvent)
                 local rect = ui.Rectangle.new(inv_component)
                 rect:SetPos(component.x, component.y)
                 rect:SetSize(component.width, component.height)
+                rect.colour = rectColour
                 rects[id] = rect
 
                 return false
@@ -73,7 +80,13 @@ Event.Draw.Subscribe("boneCheck", function(inventoryUpdatedEvent)
         return false -- Keep iterating
     end)
 
-    for idx, _ in ipairs(rects) do
-        rects[idx].colour = rectColour
+    if colourChanged then
+        for idx, _ in pairs(rects) do
+            if rects[idx] ~= nil then
+                rects[idx].colour = rectColour
+            end
+        end
+        colourChanged = false
     end
+    
 end)
